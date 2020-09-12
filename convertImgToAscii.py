@@ -92,13 +92,21 @@ if __name__ == "__main__":
     print(f"  Height: {raw_image_height}")
     print(f"    (size: {raw_image.size})")
     
-    # Loop over image pixels
-    for y in range(raw_image_height):
-        for x in range(raw_image_width):
-            # Get luminance of pixel
-            pixel_luminance = get_pixel_luminance_1_0(args.luminance_func, raw_image_pixels[x, y], [255, 255, 255])
+    # Create output file
+    with open(args.o, "w") as output_file:
 
-            print(pixel_luminance, end=" ")
+        # Loop over image pixels
+        for y in range(raw_image_height):
+            for x in range(raw_image_width):
+                # Get luminance of pixel
+                pixel_luminance = get_pixel_luminance_1_0(args.luminance_func, raw_image_pixels[x, y], [255, 255, 255])
+                
+                # Write luminance to output file
+                output_file.write(str(pixel_luminance))
+
+                print(pixel_luminance, end=" ")
     
-        print() # Newline
+            # Write newline
+            output_file.write("\n")
+            print()
 
