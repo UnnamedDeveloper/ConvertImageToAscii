@@ -1,6 +1,7 @@
 from PIL import Image, ImageFilter
 from argparse import ArgumentParser
 import sys
+import math
 
 
 def get_pixel_color_space_luminance(pixel):
@@ -30,7 +31,7 @@ def get_pixel_perceived_sqrt_luminance(pixel):
     luminance function.
     '''
     red, green, blue = pixel
-    return sqrt(0.299 * red^2 + 0.587 * green^2 + 0.114 * blue^2)
+    return math.sqrt(0.299 * red * red + 0.587 * green * green + 0.114 * blue * blue)
 
 
 def get_pixel_luminance(luminance_func, pixel):
@@ -94,7 +95,7 @@ if __name__ == "__main__":
     # Optional arguments
     parser.add_argument("-o", type=str, default="out", help="Path to output file")
     parser.add_argument("-shrinc-scale", type=int, default=10, help="Factor to shrinc the original image by. Result most accurate when shrinc scale is divisible by both image width and height.")
-    parser.add_argument("--luminance-func", choices=["color_space", "perceived", "perceived_sqrt"], help="Which function to use to calculate luminance. Can be: 'color_space', 'percieved', 'perceived_sqrt'")
+    parser.add_argument("--luminance-func", choices=["color_space", "perceived", "perceived_sqrt"], help="Which function to use to calculate luminance. Can be: 'color_space', 'perceived', 'perceived_sqrt'")
     parser.add_argument("--ascii-atlas", type=str, default="$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ", help="Characters to represent different levels of luminance. Should go from darkest to brightest.")
 
     # Parse arguments
