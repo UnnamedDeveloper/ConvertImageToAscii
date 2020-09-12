@@ -93,6 +93,7 @@ if __name__ == "__main__":
 
     # Optional arguments
     parser.add_argument("-o", type=str, default="out", help="Path to output file")
+    parser.add_argument("-shrinc-scale", type=int, default=10, help="Factor to shrinc the original image by. Result most accurate when shrinc scale is divisible by both image width and height.")
     parser.add_argument("--luminance-func", choices=["color_space", "perceived", "perceived_sqrt"], help="Which function to use to calculate luminance. Can be: 'color_space', 'percieved', 'perceived_sqrt'")
     parser.add_argument("--ascii-atlas", type=str, default="$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ", help="Characters to represent different levels of luminance. Should go from darkest to brightest.")
 
@@ -115,10 +116,14 @@ if __name__ == "__main__":
     with open(args.o, "w") as output_file:
 
         # Loop over image pixels
-        for y in range(raw_image_height):
-            for x in range(raw_image_width):
+        for y in range(int(raw_image_height / args.shrinc_scale)):
+            for x in range(int(raw_image_width / args.shrinc_scale)):
+                # Get X Y position in correct scale
+                real_x = int(x * args.shrinc_scale)
+                real_y = int(y * args.shrinc_scale)
+
                 # Get luminance of pixel
-                pixel_luminance = get_pixel_luminance_1_0(args.luminance_func, raw_image_pixels[x, y], [255, 255, 255])
+                pixel_luminance = get_pixel_luminance_1_0(args.luminance_func, raw_image_pixels[real_x, real_y], [255, 255, 255])
                 
                 # Get ascii character for luminance
                 luminance_char = get_luminance_char(args.ascii_atlas, pixel_luminance)
