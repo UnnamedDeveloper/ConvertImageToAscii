@@ -1,3 +1,6 @@
 # Vim files
 *.swp
 *.swo
+
+# Program generated files
+*.asciiart

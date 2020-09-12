@@ -113,7 +113,7 @@ if __name__ == "__main__":
     print(f"    (size: {raw_image.size})")
     
     # Create output file
-    with open(args.o, "w") as output_file:
+    with open(args.o + ".asciiart", "w") as output_file:
 
         # Loop over image pixels
         for y in range(int(raw_image_height / args.shrinc_scale)):
