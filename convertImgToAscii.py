@@ -65,6 +65,24 @@ def get_pixel_luminance_1_0(luminance_func, pixel, max_pixel):
     return luminance / max_luminance
 
 
+def get_luminance_char(ascii_atlas, luminance):
+    '''Get the ascii character matching the given luminance best
+
+    Get the ascii character from the given ascii atlas matching
+    the given luminance best. The luminance should be between 1
+    and 0.
+    '''
+
+    # Clamp luminance value within 1 to 0
+    luminance = max(0, min(1, luminance))
+
+    # Get luminance position in atlas
+    atlas_pos = round(luminance * (len(ascii_atlas) - 1))
+
+    # Return ascii character at position
+    return ascii_atlas[atlas_pos]
+
+
 if __name__ == "__main__":
 
     # Create argument parser
@@ -76,6 +94,7 @@ if __name__ == "__main__":
     # Optional arguments
     parser.add_argument("-o", type=str, default="out", help="Path to output file")
     parser.add_argument("--luminance-func", choices=["color_space", "perceived", "perceived_sqrt"], help="Which function to use to calculate luminance. Can be: 'color_space', 'percieved', 'perceived_sqrt'")
+    parser.add_argument("--ascii-atlas", type=str, default="$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ", help="Characters to represent different levels of luminance. Should go from darkest to brightest.")
 
     # Parse arguments
     args = parser.parse_args()
@@ -101,10 +120,13 @@ if __name__ == "__main__":
                 # Get luminance of pixel
                 pixel_luminance = get_pixel_luminance_1_0(args.luminance_func, raw_image_pixels[x, y], [255, 255, 255])
                 
-                # Write luminance to output file
-                output_file.write(str(pixel_luminance))
+                # Get ascii character for luminance
+                luminance_char = get_luminance_char(args.ascii_atlas, pixel_luminance)
 
-                print(pixel_luminance, end=" ")
+                # Write luminance to output file
+                output_file.write(luminance_char)
+
+                print(luminance_char, end="")
     
             # Write newline
             output_file.write("\n")
