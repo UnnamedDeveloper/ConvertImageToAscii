@@ -31,9 +31,8 @@ To convert an image to ascii art, you have to first have an image you want to co
 
 To get the argument options, do `python convertImgToAscii.py --help`. The same options will be in this README.
 
-----------------------------------------------------------------------------------------------------
-| Option   | Hint                        | Example                                                 |
-----------------------------------------------------------------------------------------------------
+| Option           | Hint                        | Example                                         |
+|------------------|-----------------------------|-------------------------------------------------|
 | filepath         | The path to the input file  | `python convertImgToAscii.py img.png`           |
 | -o               | The path to the output file | `python convertImgToAscii.py img.png -o output` |
 | -shric-scale     | The factor to shrinc the image by               | `python convertImgToAscii.py img.png -shrinc-scale 10`             |
