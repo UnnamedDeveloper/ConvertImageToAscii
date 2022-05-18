@@ -20,7 +20,7 @@ With python installed, make sure to install the required python libraries
 Clone repo to your computer
 
 ```
-git clone https://github.com/UnnamedDeveloper/ConvertImageToAscii.git
+git clone https://github.com/jovialen/ConvertImageToAscii.git
 ```
 
 Here, as long as you have the convertImgToAscii.py file, you have all you need (+ the project dependencies)
